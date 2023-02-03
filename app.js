@@ -52,7 +52,7 @@ User.hasMany(Order);
 sequelize
 .sync()
 .then(response=>{
-    app.listen(port)
+    app.listen(process.env.port)
 
 })
 
