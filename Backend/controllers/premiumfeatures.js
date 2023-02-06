@@ -6,8 +6,6 @@ const DownloadList=require('../Models/DownloadList');
 const S3Services  = require('../services/s3services')
 let Track_items_per_page=5;
 let Track_page=1;
-
-
 exports.getAllUserWithExpense=async(req,res)=>{
     User.findAll().then(async(users)=>{
       var UserAndExpense=[]
@@ -46,7 +44,12 @@ exports.GetFromToExpenses=(req,res,next)=>{
 
     }
     if(req.query.items!=undefined){
+    
+      
+ 
         Track_items_per_page=parseInt(req.query.items);
+     
+       
     }
 
     const {From}=req.body;
@@ -55,14 +58,15 @@ exports.GetFromToExpenses=(req,res,next)=>{
    // const DecyptJWT=Jwt.verify(token,process.env.);
 
     const DecyptJWT=jwt.verify(token,process.env.jwtkey);
+    if(DecyptJWT.id!=undefined){
+      DecyptJWT=DecyptJWT.id;
+  }
    console.log(From+""+To+""+DecyptJWT);
-    // let mm=`${From}`;
-    // let kk=`${To}`;
-   // console.log(mm+"---->"+kk);
+
     Expense.findAll({where:{userId:DecyptJWT}}).then(k=>{
         const Op=Sequelize.Op;
         Expense.findAndCountAll({where:{userId:DecyptJWT,createdAt:{[Op.between]:[From,To]}}}).then(TrackTotalItems=>{
-           // console.log(TrackTotalItems);
+           
 
 
             Expense.findAll({limit:Track_items_per_page,offset:((Track_page-1)* Track_items_per_page),where:{userId:DecyptJWT,createdAt:{[Op.between]:[From,To]}}}).then(response=>{
@@ -89,6 +93,9 @@ exports.downloadExpenses = async (req,res,next)=>{
 
    
         const DecyptJWT=jwt.verify(token,process.env.jwtkey);
+        if(DecyptJWT.id!=undefined){
+          DecyptJWT=DecyptJWT.id;
+      }
         const Op=Sequelize.Op;
           await Expense.findAll({where:{userId:DecyptJWT,createdAt:{[Op.between]:[From,To]}}})
           .then(async (TrackTotalItems)=>{
@@ -105,7 +112,7 @@ exports.downloadExpenses = async (req,res,next)=>{
                  console.log(fileUrl);
                 
                   
-                   await DownloadList.create({url:fileUrl,userId:DecyptJWT})
+                   await DownloadList.create({url:fileUrl,userId:DecyptJWT.id})
                     .then(urlresp=>{
                         console.log('urlresp');
                         console.log(urlresp);
@@ -119,7 +126,9 @@ exports.downloadExpenses = async (req,res,next)=>{
 exports.downloadlistexpense=(req,res,next)=>{
     const {token}=req.body;
     const userid=jwt.verify(token,process.env.jwtkey);
-
+    if(userid.id!=undefined){
+      userid=userid.id;
+  }
     DownloadList.findAll({where:{userId:userid}})
     .then(response=>{
         console.log(response);

@@ -23,6 +23,7 @@ exports.UserSignUp=(req,res,next)=>{
                     name:name,
                     email:email,
                     password:hash,
+                    premium:false
                    
                 })
                 .then(r=>{

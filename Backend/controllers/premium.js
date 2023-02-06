@@ -14,8 +14,10 @@ exports.Ispremuim=(req,res,next)=>{
     console.log(token)
     const userid=jwt.verify(token,process.env.jwtkey);
     console.log(userid)
-    console.log(userid)
-
+    console.log(userid.id)
+    if(userid.id!=undefined){
+        userid=userid.id;
+    }
     User.findOne({where:{id:userid}})
     .then( response=>{
         console.log(response);
@@ -38,6 +40,9 @@ exports.addExpense=(req,res,next)=>{
     const {token,expenseAmount,description,category}=req.body;
     const userid=jwt.verify(token,process.env.jwtkey);
     console.log(userid.id+"--"+expenseAmount+"--"+category+"--"+description)
+    if(userid.id!=undefined){
+        userid=userid.id;
+    }
     Expense.create({
         expenseAmount:expenseAmount,
         description:description,
@@ -58,6 +63,9 @@ exports.getExpense=(req,res,next)=>{
      const userId=jwt.verify(token,process.env.jwtkey);
      console.log('this is getExpense')
      console.log(userId);
+     if(userId.id!=undefined){
+        userId=userId.id;
+    }
      Expense.findAll({where:{userId:userId},order:[['createdAt','DESC']]})
      .then(response=>{
         res.status(200).json(response);
@@ -97,6 +105,9 @@ exports .getpremiumexpense=(req,res,next)=>{
         page=parseInt(req.query.page);
     }
     const userId=jwt.verify(token,process.env.jwtkey);
+    if(userId.id!=undefined){
+        userId=userId.id;
+    }
 
     Expense.findAndCountAll({where:{userId:userId}})
     .then(totalExpenses=>{
@@ -104,9 +115,10 @@ exports .getpremiumexpense=(req,res,next)=>{
 
         // console.log(response);
         Expense.findAll({limit:itemsperpage,offset:((page-1)* itemsperpage),where:{userId:userId},order:[['createdAt','DESC']]})
-        .then(respon=>{
+        .then(async respon=>{
+            console.log(respon)
 
-            res.status(200).json({respon,totalItems:totalItems.count,
+            await res.status(200).json({respon,totalItems:totalItems.count,
                   totalpages:Math.ceil(totalItems.count/itemsperpage,
                   )
                 //totalpages:totalItems.count/items_per_page

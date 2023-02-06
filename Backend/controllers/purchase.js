@@ -1,5 +1,5 @@
 const Razorpay = require('razorpay');
-const Order = require('../models/order')
+const Order = require('../Models/Order')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken');
 
@@ -9,6 +9,9 @@ exports.premiumPurchase=(req,res)=>{
     const {token}=req.body;
     const userId=jwt.verify(token,process.env.jwtkey);
     console.log(userId+"--user");
+    if(userId.id!=undefined){
+        userId=userId.id;
+    }
 
     try{
         var rzrInstance=new Razorpay({
@@ -22,7 +25,7 @@ exports.premiumPurchase=(req,res)=>{
             if(err){
                 throw new Error(err)
             }
-            Order.create({orderid:order.id,status:'PENDING',userId:userId})
+            Order.create({orderid:order.id,status:'PENDING',userId:userId.id})
             .then(()=>{
                 return res.status(201).json({order,key_id:rzrInstance.key_id})
             })
