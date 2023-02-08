@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #numexpp{
+            height: 30px;
+             width: 70px;
+             margin-top: 16px;
+             margin-left: 20px;
+             border-radius: 10px;
+             color: white;
+             font-size: 20px;
+             background-color: cornflowerblue;
+             border-color: cadetblue;
+
+
+        }
+    </style>
+</head>
+<body>
+    <div id="premiumsub" style="height: 1px;color:brown">
+        <button onclick="buypremium()">subscribe to premium</button>
+    </div>
+    <div style="display: flex;flex-direction: row; gap: 100px;">
+        <h1>Expense tracker</h1>
+        <div id="premium features" style="margin-top: 30px; gap: 30px;">
+            <button onclick="fromto()">From to</button>
+            <button onclick="leaderboard()">learderBoard</button>
+        </div>
+        <button onclick="logout()" style="height: 30px;margin-top: 25px;">Logout</button>
+    </div>
+
+    <form id="form" >
+
+        <label >Expense Amout</label>
+        <input type="number" name="expenseAmount" id="expenseAmount" required>
+        <label >choose a description</label>
+        <input type="text" name="description" id="description" required>
+        <label for="">Category</label>
+        <select name="category" id="category" required >
+            <option value="" disabled selected hidden>choose one</option>
+            <option value="food">Food</option>
+            <option value="fuel">Feul</option>
+            <option value="Party">Party</option>
+            <option value="Tours">Tours</option>
+            <option value="creditCard">CreditCard</option>
+            <option value="houseRequirements">house requirements</option>
+        </select>
+        <button type="submit">submit</button>
+        </form>
+        <div style="display: flex;gap:0px;">
+            <h4>Amount--</h4>
+            <h4>Category--</h4>
+            <h4>Description</h4>
+           <div id="insertnumexpp">
+            </div>
+        </div>
+        <div >
+            <div id="ul_id">              
+            </div>
+
+            <div id="pagination" style="display: flex;flex-direction: row; gap: 30px; color: brown;"></div>
+
+        </div>
+
+       
+        
+    
+       
+    
+        </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="user.js"></script>
+    
+</body>
+</html>

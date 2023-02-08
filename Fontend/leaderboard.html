@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="display: flex; flex-direction: row; gap: 50px;">
+        <h1>Expense leaderBoard</h1>
+        <button style="height: 30px;margin-top: 20px;"><a href="user.html">Go to expense page</a></button>
+
+        <button style="height: 30px;margin-top: 25px;"><a href="FromTo.html" target="_blank" rel="noopener noreferrer">daily expenses</a></button>
+        <button style="height: 30px;margin-top: 20px;" onclick="logout()">logout</button>
+
+    </div>
+   
+   
+    <div>
+        <div class="user_heading" style="display: flex;flex-direction: row;gap: 100px;">
+            <p><b>Rank</b></p>
+            <p><b>User Name</b></p>
+            <p><b>toatl expense</b></p>
+
+        </div>
+
+        <div class="use_cont" id="use_cont" >
+
+    </div>
+            
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script> 
+    <script >
+        function logout(){
+            localStorage.removeItem('token');
+            window.location.href='login.html'
+        }
+        document.addEventListener('DOMContentLoaded',()=>{
+    user_cont=  document.getElementById('use_cont')
+    axios.post('http://13.230.60.79:2121/leaderboard').then(alluser=>{
+
+        let paramString = window.location.href;
+        console.log(paramString.split('/'))
+        console.log(alluser.data)
+        var data=alluser.data
+        data.sort((a, b) => parseFloat(b.totalexpense) - parseFloat(a.totalexpense));
+        for(let i=0;i<data.length;i++){
+            user_cont.innerHTML=user_cont.innerHTML+`<div style="display: flex;flex-direction: row;gap: 160px;" class="users" id="users">
+        <p>${i+1}</p>
+        <p>${data[i].name}</p>
+        <p>${data[i].totalexpense}</p>
+
+    </div>`
+
+        }
+        
+    })
+
+})
+</script>
+
+    
+</body>
+</html>

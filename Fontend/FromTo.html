@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="display: flex; gap: 30px;">
+        <h1>
+            ExpenseTracker 
+        </h1>
+        <button style="height: 30px;margin-top: 25px;"><a href="user.html" target="_blank" rel="noopener noreferrer">home</a></button>
+        <button style="height: 30px;margin-top: 25px;"><a href="leaderboard.html" target="_blank" rel="noopener noreferrer">leaderBoard</a></button>
+        <button onclick="logout()" style="height: 30px;margin-top: 25px;">logout</button>
+
+    </div>
+   
+    <h3>
+        check your monthly expenses
+    </h3>
+
+    <form action="" id="form" style="display: flex;flex-direction: column;gap: 10px;">
+        <label for="">From</label>
+        <input type="date" name="From" style="width: 150px;">
+        <label for="">To</label>
+        <input type="date" name="To" style="width: 150px;">
+        <button style="width: 150px;" type="submit">submit</button>
+    </form>
+    <div id="numsperpage">
+
+    </div>
+
+    <div id="ul_id">
+
+    </div>
+    <div id="pagination"> 
+
+    </div>
+    <div id="downloadbutton">
+
+
+    </div>
+
+    <div>
+        <h1>Downloads list</h1>
+
+        <div id="downloadlist"></div>
+    </div>
+
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script> 
+    <script src="FromTo.js">
+
+    </script>
+    
+
+
+
+
+   
+</body>
+</html>
